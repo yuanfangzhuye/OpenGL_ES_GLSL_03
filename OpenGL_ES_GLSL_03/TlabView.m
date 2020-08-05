@@ -201,17 +201,28 @@
         glGenBuffers(1, &_myVertices);
     }
     
+    //2.-----处理顶点数据-------
+    //(1).将_myVertices绑定到GL_ARRAY_BUFFER标识符上
     glBindBuffer(GL_ARRAY_BUFFER, _myVertices);
+    //(2).把顶点数据从CPU内存复制到GPU上
     glBufferData(GL_ARRAY_BUFFER, sizeof(attrArray), attrArray, GL_DYNAMIC_DRAW);
     
+    //(3).将顶点数据通过myPrograme中的传递到顶点着色程序的position
     GLuint position = glGetAttribLocation(self.myProgram, "position");
+    //(4).打开position
     glEnableVertexAttribArray(position);
+    //(5).设置读取方式
     glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, (GLfloat *)NULL);
     
+    //3.--------处理顶点颜色值-------
+    //(1).glGetAttribLocation,用来获取vertex attribute的入口的
     GLuint positionColor = glGetAttribLocation(self.myProgram, "positionColor");
+    //(2).设置合适的格式从buffer里面读取数据
     glEnableVertexAttribArray(positionColor);
+    //(3).设置读取方式
     glVertexAttribPointer(positionColor, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, (GLfloat *)NULL + 3);
     
+    //4.--------处理纹理-------
     GLuint textCoor = glGetAttribLocation(self.myProgram, "textCoor");
     glEnableVertexAttribArray(textCoor);
     glVertexAttribPointer(textCoor, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, (GLfloat *)NULL + 6);
